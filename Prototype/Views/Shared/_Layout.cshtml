@@ -1,0 +1,18 @@
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>_Layout</title>
+    @Styles.Render("~/styles/common")
+    @RenderSection("styles", required: false)
+</head>
+<body>
+<div>
+    @RenderBody()
+</div>
+    @Scripts.Render("~/bundles/common")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
