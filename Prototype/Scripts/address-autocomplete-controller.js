@@ -45,7 +45,42 @@ PTP.Controllers.AddressAutocomplete.prototype._subscribe = function () {
         return self.autocompleteOnfocusHandler(self);
     });
 
+
+    $('#Save').click(function() {
+        PTP.Controllers.AddressAutocomplete.prototype.submit(self)
+    });
+
 };
+
+PTP.Controllers.AddressAutocomplete.prototype.submit = function(ctrl) {
+    var self = ctrl;
+    var data = self.formToJson($('#saveForm'));
+
+    $.ajax({
+        type: "POST",
+        url: 'https://api.powerbi.com/beta/0f81ba93-6f13-4365-8fcf-9b8db1ab1816/datasets/d105829a-858d-4789-9d9a-50ca76784fd4/rows?key=XZxaxvCxUQXug9WDypWz%2F%2FA3dYxRR0BagpG%2FjQYpk0DhdI3E5714DG9pSXJkRgl1XSc%2FvcJfZBnWbXahuNUKmQ%3D%3D',
+        data: '[{"City" :"Saint Ives","Tech" :"3G","Coverage" :6,"DateTime" :"2017-03-27T13:39:08.315Z","Country" :"United Kingdom","State" :"Cornwall"}]', //JSON.stringify($('#saveForm').serialize()),//JSON.stringify(data),
+        success: function() {
+            alert('data sent');
+        },
+        dataType: 'json',
+        contentType: 'application/json'
+    });
+}
+
+PTP.Controllers.AddressAutocomplete.prototype.formToJson = function(jqueryForm) {
+    var dataArray = jqueryForm.serializeArray();
+    var result = [];
+    $.each(dataArray,
+        function(k, v) {
+            var propName = v.name;
+            var propvalue = v.value;
+            var item = {}
+            item[propName] = propvalue;
+            result.push(item);
+        });
+    return result;
+}
 
 PTP.Controllers.AddressAutocomplete.prototype.fillInAddress = function(ctrl) {
     var self = ctrl;
@@ -64,7 +99,18 @@ PTP.Controllers.AddressAutocomplete.prototype.fillInAddress = function(ctrl) {
         if (self.googleResponseModel[addressType]) {
             var val = place.address_components[i][self.googleResponseModel[addressType]];
             document.getElementById(addressType).value = val;
+
+
+            switch (addressType) {
+                case 'locality':
+                    $('#City').val(val);
+                    break;
+                    
+            }
+
         }
+
+        
     }
 
     var myLatLng = { lat: place.geometry.location.lat(), lng: place.geometry.location.lng() };

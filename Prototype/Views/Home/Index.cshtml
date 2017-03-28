@@ -40,9 +40,33 @@
         </td>
     </tr>
 </table>
-<div id="mapWrapper" style="height:500px; width:500px;">
+
+<form name="saveForm" id="saveForm">
+    <label for="City">City</label>
+    <input name="City" id="City" type="text"  />
+
+    <label for="Tech">Tech</label>
+    <input name="Tech" id="Tech" type="text" />
+
+    <label for="Coverage">Coverage</label>
+    <input name="Coverage" id="Coverage" type="text"/>
+    
+    <label for="DateTime">DateTime</label>
+    <input name="DateTime" id="DateTime" type="datetime"/>
+    <br/>
+    
+    <label for="Country">Country</label>
+    <input name="Country" id="Country" type="text" />
+    
+    <label for="State">State</label>
+    <input name="State" id="State" type="text" />
+
+    <input type="button" name="Save" id="Save" value="Save" />
+</form>
+
+ <div id="mapWrapper" style="height:500px; width:500px;">
     <div id="map" style="height:100%"></div>
-</div> 
+</div>
 
 @section scripts{
     @Scripts.Render("~/bundles/prototype")
